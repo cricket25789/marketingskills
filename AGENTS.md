@@ -145,6 +145,21 @@ npx skills add coreyhaines31/marketingskills --list
 
 This installs skills to your `.claude/skills/` directory.
 
+### SkillKit (Multi-Agent)
+
+Use [SkillKit](https://github.com/rohitg00/skillkit) to install skills across multiple AI agents (Claude Code, Cursor, Copilot, etc.):
+
+```bash
+# Install all skills
+npx skillkit install coreyhaines31/marketingskills
+
+# Install specific skills
+npx skillkit install coreyhaines31/marketingskills --skill page-cro copywriting
+
+# List available skills
+npx skillkit install coreyhaines31/marketingskills --list
+```
+
 ### Clone and Copy
 
 Clone the repo and copy skills manually:
