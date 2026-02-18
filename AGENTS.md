@@ -145,6 +145,15 @@ npx skills add coreyhaines31/marketingskills --list
 
 This installs skills to your `.claude/skills/` directory.
 
+### Clone and Copy
+
+Clone the repo and copy skills manually:
+
+```bash
+git clone https://github.com/coreyhaines31/marketingskills.git
+cp -r marketingskills/skills/* .claude/skills/
+```
+
 ### Claude Code Plugin
 
 This repo also serves as a plugin marketplace. The manifest at `.claude-plugin/marketplace.json` lists all skills for installation via:
