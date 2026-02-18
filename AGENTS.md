@@ -126,7 +126,26 @@ The `description` is critical for skill discovery. Include:
 description: When the user wants to optimize conversions on any marketing page. Use when the user says "CRO," "conversion rate optimization," "this page isn't converting." For signup flows, see signup-flow-cro.
 ```
 
-## Claude Code Plugin
+## Installing Skills
+
+### CLI Install (npx skills)
+
+Use the `npx skills` CLI to install skills directly into your project:
+
+```bash
+# Install all skills
+npx skills add coreyhaines31/marketingskills
+
+# Install specific skills
+npx skills add coreyhaines31/marketingskills --skill page-cro copywriting
+
+# List available skills
+npx skills add coreyhaines31/marketingskills --list
+```
+
+This installs skills to your `.claude/skills/` directory.
+
+### Claude Code Plugin
 
 This repo also serves as a plugin marketplace. The manifest at `.claude-plugin/marketplace.json` lists all skills for installation via:
 
