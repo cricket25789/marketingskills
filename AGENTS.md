@@ -126,6 +126,24 @@ The `description` is critical for skill discovery. Include:
 description: When the user wants to optimize conversions on any marketing page. Use when the user says "CRO," "conversion rate optimization," "this page isn't converting." For signup flows, see signup-flow-cro.
 ```
 
+## Usage
+
+Once installed, skills are triggered by natural language. Examples:
+
+```
+"Help me optimize this landing page for conversions"
+→ Uses page-cro skill
+
+"Write homepage copy for my SaaS"
+→ Uses copywriting skill
+
+"Set up GA4 tracking for signups"
+→ Uses analytics-tracking skill
+
+"Create a 5-email welcome sequence"
+→ Uses email-sequence skill
+```
+
 ## Installing Skills
 
 ### CLI Install (npx skills)
