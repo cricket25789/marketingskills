@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Nutral — The quiet operating layer for your contingent workforce</title>
+<meta name="description" content="Nutral helps procurement, HR and finance teams gain visibility, control, and value across recruitment agencies and payroll intermediaries." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2EDE0;
+    --paper-2: #E8E1CF;
+    --milk: #FBF8F0;
+    --sage: #859C81;
+    --sage-2: #4A5F4A;
+    --sage-3: #2F3D2F;
+    --clay: #C8704B;
+    --clay-2: #E08B62;
+    --ink: #1F2620;
+    --muted: #6B7268;
+    --line: rgba(31,38,32,.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .1  0 0 0 0 .08  0 0 0 .25 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: .5; mix-blend-mode: multiply; z-index: 1;
+  }
+  .serif { font-family: 'Cormorant Garamond', 'Times New Roman', serif; letter-spacing: -.01em; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+  .narrow { max-width: 880px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+  /* Nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 26px 0;
+    transition: background .3s, padding .3s, border-color .3s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(242,237,224,.85);
+    backdrop-filter: blur(14px);
+    padding: 14px 0;
+    border-bottom-color: var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; font-style: italic;
+    letter-spacing: -.02em; color: var(--sage-3);
+  }
+  .logo sup { font-size: 11px; vertical-align: super; color: var(--clay); font-style: normal; letter-spacing: .1em; font-family: 'Inter', sans-serif; }
+  .nav-links { display: flex; gap: 36px; font-size: 13px; color: var(--sage-2); letter-spacing: .04em; }
+  .nav-links a { transition: color .2s; position: relative; }
+  .nav-links a::after {
+    content: ""; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--clay);
+    transition: width .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--clay); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 24px; border-radius: 2px;
+    font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    background: var(--ink); color: var(--milk); border: 1px solid var(--ink);
+    transition: all .35s cubic-bezier(.2,.8,.2,1); cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: 0; background: var(--clay); transform: translateY(101%);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1); z-index: -1;
+  }
+  .btn span { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 10px; }
+  .btn:hover { border-color: var(--clay); }
+  .btn:hover::before { transform: translateY(0); }
+  .btn .arrow { transition: transform .3s; }
+  .btn:hover .arrow { transform: translateX(4px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-ghost::before { background: var(--ink); }
+  .btn-ghost:hover { color: var(--milk); }
+
+  @media (max-width: 800px) { .nav-links { display: none; } }
+
+  /* Hero */
+  .hero { position: relative; padding: 170px 0 100px; text-align: center; overflow: hidden; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 11px; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--sage-2); margin-bottom: 36px;
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{ transform: scale(1); opacity: 1;} 50%{transform: scale(1.6); opacity:.6;} }
+
+  h1.hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(54px, 9vw, 128px);
+    line-height: .96;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 36px;
+    letter-spacing: -.025em;
+  }
+  h1.hero-h1 em { font-style: italic; color: var(--sage-2); }
+  h1.hero-h1 .word { display: inline-block; }
+  .hero-sub {
+    max-width: 620px; margin: 0 auto 44px;
+    font-size: 19px; color: var(--muted);
+  }
+  .hero-ctas { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+  /* Hero illustration */
+  .hero-illu {
+    margin-top: 100px;
+    position: relative;
+    height: 360px;
+    max-width: 1100px;
+    margin-left: auto; margin-right: auto;
+  }
+  @media (max-width: 700px) { .hero-illu { height: 280px; margin-top: 60px; } }
+  .hero-illu svg { width: 100%; height: 100%; overflow: visible; }
+  .node { transition: r .6s, fill .6s; }
+  .conn { stroke-dasharray: 6 6; animation: dash 24s linear infinite; }
+  @keyframes dash { to { stroke-dashoffset: -200; } }
+  .node-pulse { animation: nodePulse 2.6s ease-in-out infinite; transform-origin: center; }
+  @keyframes nodePulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.3);} }
+
+  /* Manifesto */
+  .manifesto { padding: 140px 0; }
+  .manifesto p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.8vw, 52px);
+    line-height: 1.2; font-weight: 300; letter-spacing: -.01em;
+    color: var(--ink); text-align: left;
+  }
+  .manifesto p em { color: var(--sage-2); }
+  .manifesto-strike {
+    text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--clay);
+    color: var(--muted);
+  }
+
+  /* Principles strip — horizontal scroll */
+  .principles { padding: 120px 0; background: var(--sage-3); color: var(--paper); position: relative; overflow: hidden; }
+  .principles-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 0 32px; max-width: 1280px; margin: 0 auto 60px;
+    position: relative; z-index: 2;
+  }
+  .principles-head h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px,5vw,60px); line-height: 1; max-width: 600px; letter-spacing: -.02em; }
+  .principles-head h2 em { color: var(--clay-2); font-style: italic; }
+  .principles-head .small { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: rgba(242,237,224,.55); }
+  .h-scroll {
+    display: flex; gap: 30px; overflow-x: auto;
+    padding: 0 32px 30px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .h-scroll::-webkit-scrollbar { height: 4px; }
+  .h-scroll::-webkit-scrollbar-track { background: rgba(242,237,224,.08); }
+  .h-scroll::-webkit-scrollbar-thumb { background: var(--clay); }
+  .h-card {
+    flex: 0 0 360px;
+    background: rgba(242,237,224,.05);
+    border: 1px solid rgba(242,237,224,.12);
+    padding: 40px 36px;
+    scroll-snap-align: start;
+    transition: background .4s, border-color .4s, transform .4s;
+  }
+  .h-card:hover { background: rgba(242,237,224,.1); border-color: var(--clay-2); transform: translateY(-4px); }
+  .h-card-num { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 80px; line-height: 1; color: var(--clay-2); font-weight: 300; margin-bottom: 30px; }
+  .h-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; margin-bottom: 14px; letter-spacing: -.01em; }
+  .h-card p { color: rgba(242,237,224,.72); font-size: 14.5px; }
+
+  /* Process — animated SVG path */
+  .process { padding: 140px 0; }
+  .process-head { text-align: center; margin-bottom: 80px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .section-eyebrow { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--clay); margin-bottom: 16px; }
+  h2.section-h2 {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 5.5vw, 68px); font-weight: 300; line-height: 1.04; letter-spacing: -.02em;
+  }
+  h2.section-h2 em { color: var(--sage-2); font-style: italic; }
+  .timeline { position: relative; max-width: 920px; margin: 0 auto; }
+  .timeline-svg {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 4px; height: 100%; overflow: visible;
+  }
+  .timeline-svg line {
+    stroke: var(--sage); stroke-width: 1.5;
+    stroke-dasharray: 1500; stroke-dashoffset: 1500;
+    transition: stroke-dashoffset 2s ease;
+  }
+  .timeline.drawn .timeline-svg line { stroke-dashoffset: 0; }
+  @media (max-width: 700px) { .timeline-svg { left: 24px; transform: none; } }
+
+  .t-row {
+    display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0;
+    margin-bottom: 70px; position: relative; align-items: start;
+  }
+  .t-row:last-child { margin-bottom: 0; }
+  @media (max-width: 700px) { .t-row { grid-template-columns: 56px 1fr; gap: 0; } }
+  .t-content { padding: 0 50px; }
+  @media (max-width: 700px) { .t-content { padding: 0 0 0 16px; grid-column: 2; } }
+  .t-row.odd .t-content.right, .t-row.even .t-content.left { display: none; }
+  @media (max-width: 700px) { .t-row.odd .t-content.right { display: block; } .t-row.odd .t-content.left { display: none; } }
+  .t-marker {
+    width: 18px; height: 18px; border-radius: 50%; background: var(--paper); border: 2px solid var(--sage-2);
+    margin: 4px auto 0; position: relative; z-index: 2;
+    transition: background .4s, transform .4s;
+  }
+  @media (max-width: 700px) { .t-marker { margin: 4px 0 0; } }
+  .t-row.in .t-marker { background: var(--clay); border-color: var(--clay); transform: scale(1.2); }
+  .t-step-label { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--clay); margin-bottom: 8px; }
+  .t-row h4 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; margin-bottom: 12px; letter-spacing: -.01em; }
+  .t-row p { color: var(--muted); font-size: 15.5px; }
+
+  /* Stats */
+  .stats { padding: 140px 0; background: var(--paper-2); }
+  .stats-head { text-align: center; max-width: 720px; margin: 0 auto 80px; }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-cell { background: var(--paper-2); padding: 60px 48px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(64px, 9vw, 128px);
+    font-weight: 300; color: var(--sage-3); line-height: .95; margin-bottom: 18px;
+    letter-spacing: -.03em;
+  }
+  .stat-num .unit { color: var(--clay); font-size: .42em; margin-left: 6px; vertical-align: top; font-style: italic; }
+  .stat-label { font-size: 15px; color: var(--muted); max-width: 320px; }
+  .stat-tag {
+    display: inline-block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--clay); margin-bottom: 12px;
+  }
+
+  /* Editorial spread */
+  .editorial { padding: 140px 0; }
+  .ed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  @media (max-width: 900px) { .ed-grid { grid-template-columns: 1fr; gap: 50px; } }
+  .ed-figure {
+    position: relative; aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--sage-2) 60%, var(--sage-3) 100%);
+    overflow: hidden;
+  }
+  .ed-figure svg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+  .ed-figure-caption {
+    position: absolute; bottom: 24px; left: 24px; right: 24px;
+    background: rgba(242,237,224,.92);
+    padding: 18px 22px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px;
+    color: var(--sage-3);
+    backdrop-filter: blur(8px);
+  }
+  .ed-body h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px,4.5vw,56px); font-weight: 300; line-height: 1.05; letter-spacing: -.02em; margin-bottom: 24px; }
+  .ed-body h2 em { color: var(--clay); font-style: italic; }
+  .ed-body p { color: var(--muted); font-size: 16px; margin-bottom: 18px; max-width: 460px; }
+  .ed-body p strong { color: var(--ink); font-weight: 500; }
+
+  /* Testimonials grid */
+  .quotes { padding: 140px 0; background: var(--milk); }
+  .quotes-head { text-align: center; max-width: 720px; margin: 0 auto 70px; }
+  .quotes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; }
+  @media (max-width: 900px) { .quotes-grid { grid-template-columns: 1fr; } }
+  .quote-card {
+    padding: 40px 36px;
+    background: var(--paper);
+    border-radius: 2px;
+    border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 24px;
+    transition: transform .4s, box-shadow .4s;
+  }
+  .quote-card:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(31,38,32,.2); }
+  .quote-card .mark { font-family: 'Cormorant Garamond', serif; font-size: 64px; color: var(--clay); line-height: .6; }
+  .quote-card blockquote { font-family: 'Cormorant Garamond', serif; font-size: 22px; line-height: 1.3; font-weight: 400; color: var(--ink); font-style: italic; }
+  .quote-meta { display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
+  .quote-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--clay), var(--sage)); }
+  .quote-name { font-size: 14px; font-weight: 500; }
+  .quote-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* CTA */
+  .cta { padding: 160px 0; text-align: center; background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+  .cta-bg {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .cta-bg svg { width: 100%; height: 100%; }
+  .cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(46px,7vw,108px); font-weight: 300; line-height: 1; letter-spacing: -.025em; margin-bottom: 30px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .cta h2 em { color: var(--clay-2); font-style: italic; }
+  .cta p { font-size: 18px; color: rgba(242,237,224,.7); max-width: 540px; margin: 0 auto 44px; }
+
+  /* Footer */
+  footer { background: var(--paper); padding: 80px 0 36px; position: relative; z-index: 2; }
+  .foot-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid var(--line); }
+  @media (max-width: 800px) { .foot-top { flex-direction: column; align-items: flex-start; } }
+  .foot-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px,4vw,52px); font-weight: 300; line-height: 1.05; max-width: 700px; letter-spacing: -.01em; }
+  .foot-tagline em { color: var(--sage-2); font-style: italic; }
+  .foot-cols { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; padding: 50px 0; }
+  @media (max-width: 800px) { .foot-cols { grid-template-columns: 1fr 1fr; } }
+  .foot-cols h5 { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--clay); margin-bottom: 18px; font-weight: 500; }
+  .foot-cols ul { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--muted); }
+  .foot-cols a:hover { color: var(--sage-2); }
+  .foot-bottom { padding-top: 30px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .1s; }
+  .reveal.d2 { transition-delay: .2s; }
+  .reveal.d3 { transition-delay: .3s; }
+  .reveal.d4 { transition-delay: .4s; }
+
+  [data-parallax] { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="#">nutral<sup>.</sup></a>
+    <div class="nav-links">
+      <a href="#what">What we do</a>
+      <a href="#principles">Principles</a>
+      <a href="#process">Process</a>
+      <a href="#results">Results</a>
+    </div>
+    <a href="#contact" class="btn"><span>Start a conversation <span class="arrow">→</span></span></a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow reveal"><span class="dot"></span> A specialist advisory · Contingent workforce</div>
+    <h1 class="hero-h1 reveal d1">
+      <span class="word">The</span>
+      <span class="word"><em>quieter</em></span>
+      <span class="word">operating</span>
+      <span class="word">layer</span><br/>
+      <span class="word">for the workforce</span>
+      <span class="word">you</span>
+      <span class="word"><em>don't employ.</em></span>
+    </h1>
+    <p class="hero-sub reveal d2">
+      Nutral works with procurement, HR and finance teams to optimise relationships with recruitment agencies and payroll intermediaries — bringing visibility, control and value to your temporary workforce spend.
+    </p>
+    <div class="hero-ctas reveal d3">
+      <a href="#contact" class="btn"><span>Request a diagnostic <span class="arrow">→</span></span></a>
+      <a href="#what" class="btn btn-ghost"><span>Explore the approach</span></a>
+    </div>
+
+    <div class="hero-illu reveal d4" data-parallax="0.05">
+      <svg viewBox="0 0 1100 360" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#859C81"/>
+            <stop offset="1" stop-color="#C8704B"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Agency nodes (left) -->
+        <g class="agencies">
+          <circle class="node" cx="80" cy="60" r="8" fill="#4A5F4A"/>
+          <text x="100" y="64" font-size="11" fill="#4A5F4A" font-family="Inter">Agency · A</text>
+
+          <circle class="node" cx="100" cy="150" r="8" fill="#4A5F4A"/>
+          <text x="120" y="154" font-size="11" fill="#4A5F4A" font-family="Inter">Agency · B</text>
+
+          <circle class="node" cx="60" cy="240" r="8" fill="#4A5F4A"/>
+          <text x="80" y="244" font-size="11" fill="#4A5F4A" font-family="Inter">Agency · C</text>
+
+          <circle class="node" cx="120" cy="320" r="8" fill="#4A5F4A"/>
+          <text x="140" y="324" font-size="11" fill="#4A5F4A" font-family="Inter">Payroll Int. · D</text>
+        </g>
+
+        <!-- Connecting lines to Nutral hub -->
+        <g stroke="#C8704B" fill="none" stroke-width="1">
+          <line class="conn" x1="80" y1="60" x2="540" y2="180"/>
+          <line class="conn" x1="100" y1="150" x2="540" y2="180"/>
+          <line class="conn" x1="60" y1="240" x2="540" y2="180"/>
+          <line class="conn" x1="120" y1="320" x2="540" y2="180"/>
+        </g>
+
+        <!-- Nutral hub center -->
+        <g transform="translate(540 180)">
+          <circle r="80" fill="none" stroke="#4A5F4A" stroke-width="1" stroke-dasharray="2 4" opacity=".4"/>
+          <circle r="55" fill="#F2EDE0" stroke="#4A5F4A" stroke-width="1.4"/>
+          <circle r="55" fill="none" stroke="#C8704B" stroke-width="1.4" stroke-dasharray="20 10" class="conn"/>
+          <text y="-4" text-anchor="middle" font-family="Cormorant Garamond" font-size="22" font-style="italic" fill="#1F2620">nutral</text>
+          <text y="14" text-anchor="middle" font-family="Inter" font-size="9" letter-spacing="2" fill="#6B7268">OPERATING LAYER</text>
+          <circle r="3" cy="36" fill="#C8704B" class="node-pulse"/>
+        </g>
+
+        <!-- Connecting lines to client outputs -->
+        <g stroke="#859C81" fill="none" stroke-width="1">
+          <line class="conn" x1="540" y1="180" x2="940" y2="80"/>
+          <line class="conn" x1="540" y1="180" x2="980" y2="180"/>
+          <line class="conn" x1="540" y1="180" x2="940" y2="280"/>
+        </g>
+
+        <!-- Client outputs (right) -->
+        <g>
+          <rect x="900" y="50" width="160" height="60" fill="none" stroke="#4A5F4A" stroke-width="1"/>
+          <text x="980" y="80" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="18" fill="#1F2620">Visibility</text>
+          <text x="980" y="98" text-anchor="middle" font-family="Inter" font-size="10" fill="#6B7268">single source of truth</text>
+
+          <rect x="900" y="150" width="160" height="60" fill="none" stroke="#4A5F4A" stroke-width="1"/>
+          <text x="980" y="180" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="18" fill="#1F2620">Control</text>
+          <text x="980" y="198" text-anchor="middle" font-family="Inter" font-size="10" fill="#6B7268">clean contracts & governance</text>
+
+          <rect x="900" y="250" width="160" height="60" fill="none" stroke="#4A5F4A" stroke-width="1"/>
+          <text x="980" y="280" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="18" fill="#1F2620">Value</text>
+          <text x="980" y="298" text-anchor="middle" font-family="Inter" font-size="10" fill="#6B7268">recovered margin, quarterly</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto" id="what">
+  <div class="narrow">
+    <p class="reveal">
+      The temporary workforce is the part of payroll you <em>never quite see</em>. Margins are <span class="manifesto-strike">opaque</span>, contracts are written by the people you're paying, and the data lives in a hundred different invoices. Nutral exists to make that picture <em>legible</em> — and the economics defensible.
+    </p>
+  </div>
+</section>
+
+<section class="principles" id="principles">
+  <div class="principles-head reveal">
+    <h2>Principles we hold to, even when it's <em>inconvenient.</em></h2>
+    <div class="small">— Drag or scroll →</div>
+  </div>
+  <div class="h-scroll">
+    <div class="h-card">
+      <div class="h-card-num">i.</div>
+      <h3>No software lock-in.</h3>
+      <p>We don't sell a platform with a monthly licence. Our outputs are yours — reports, contracts, supplier files. The savings should outlast the engagement.</p>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">ii.</div>
+      <h3>Suppliers, not adversaries.</h3>
+      <p>Healthy agency relationships are an asset. We renegotiate without burning bridges — most clients retain over 90% of their incumbent supply base.</p>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">iii.</div>
+      <h3>Evidence over assertion.</h3>
+      <p>Every recommendation is grounded in your invoice data and benchmarks from comparable organisations. We bring you the maths, you bring the judgement.</p>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">iv.</div>
+      <h3>Compliance, quietly.</h3>
+      <p>IR35, AWR, umbrella legislation, off-payroll rules — we keep your model defensible without turning every decision into a legal review.</p>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">v.</div>
+      <h3>One conversation per quarter.</h3>
+      <p>Once the model is in place, the engagement runs on a light cadence. Procurement keeps the controls; we keep an eye on the market.</p>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-head reveal">
+      <div class="section-eyebrow">The engagement</div>
+      <h2 class="section-h2">Four steps, <em>roughly twelve weeks.</em></h2>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <svg class="timeline-svg" preserveAspectRatio="none" viewBox="0 0 4 1500">
+        <line x1="2" y1="0" x2="2" y2="1500" stroke-linecap="round"/>
+      </svg>
+
+      <div class="t-row odd">
+        <div class="t-content left">
+          <div class="t-step-label">— Week 1 to 3</div>
+          <h4 class="serif">Diagnose</h4>
+          <p>We pull eighteen months of invoice data and map the real shape of your contingent workforce: who you pay, what they cost, where the margins sit, and which arrangements quietly default to the supplier's favour.</p>
+        </div>
+        <div class="t-marker"></div>
+        <div class="t-content right"></div>
+      </div>
+
+      <div class="t-row even">
+        <div class="t-content left"></div>
+        <div class="t-marker"></div>
+        <div class="t-content right">
+          <div class="t-step-label">— Week 3 to 6</div>
+          <h4 class="serif">Design</h4>
+          <p>Working with your procurement, HR, finance and operational leads, we shape a target operating model — rate cards, agreed on-costs, compliance posture, and a governance layer that fits how your organisation actually makes decisions.</p>
+        </div>
+      </div>
+
+      <div class="t-row odd">
+        <div class="t-content left">
+          <div class="t-step-label">— Week 6 to 10</div>
+          <h4 class="serif">Negotiate</h4>
+          <p>We open the commercial conversations agencies and intermediaries rarely volunteer. Margin transparency, rebate structures, payroll fees, billing accuracy. The objective isn't the lowest price — it's a fair one, evidenced.</p>
+        </div>
+        <div class="t-marker"></div>
+        <div class="t-content right"></div>
+      </div>
+
+      <div class="t-row even">
+        <div class="t-content left"></div>
+        <div class="t-marker"></div>
+        <div class="t-content right">
+          <div class="t-step-label">— From week 10</div>
+          <h4 class="serif">Sustain</h4>
+          <p>We hand over reporting, renewal calendars and a benchmark library that your team can run. We stay on in a light-touch advisory capacity for as long as it's useful — and only that long.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats" id="results">
+  <div class="container">
+    <div class="stats-head reveal">
+      <div class="section-eyebrow">Results in the wild</div>
+      <h2 class="section-h2">The same workforce. <em>Materially better numbers.</em></h2>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-cell reveal">
+        <div class="stat-tag">Cost</div>
+        <div class="stat-num"><span data-count="14" data-suffix="">0</span><span class="unit">% saved</span></div>
+        <div class="stat-label">Average reduction in total agency cost within the first year of engagement.</div>
+      </div>
+      <div class="stat-cell reveal d1">
+        <div class="stat-tag">Recovery</div>
+        <div class="stat-num">£<span data-count="2.4" data-decimals="1">0</span><span class="unit">m identified</span></div>
+        <div class="stat-label">Typical recoverable margin uncovered across an 18-month invoice review for a mid-market client.</div>
+      </div>
+      <div class="stat-cell reveal d2">
+        <div class="stat-tag">Retention</div>
+        <div class="stat-num"><span data-count="93">0</span><span class="unit">% retained</span></div>
+        <div class="stat-label">Of incumbent agency suppliers retained after renegotiation — relationships intact.</div>
+      </div>
+      <div class="stat-cell reveal d3">
+        <div class="stat-tag">Speed</div>
+        <div class="stat-num"><span data-count="12">0</span><span class="unit">weeks</span></div>
+        <div class="stat-label">From the start of the diagnostic to the first measurable saving on a real invoice.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="editorial">
+  <div class="container ed-grid">
+    <div class="ed-figure reveal" data-parallax="0.06">
+      <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="r1" cx="30%" cy="30%">
+            <stop offset="0" stop-color="#E8E1CF" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#1F2620" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="400" height="500" fill="url(#r1)"/>
+        <g stroke="#F2EDE0" stroke-opacity=".25" fill="none" stroke-width="1">
+          <path d="M0 100 Q200 60 400 120" />
+          <path d="M0 180 Q220 140 400 200" />
+          <path d="M0 260 Q180 220 400 280" />
+          <path d="M0 340 Q200 300 400 360" />
+          <path d="M0 420 Q220 380 400 440" />
+        </g>
+        <g>
+          <circle cx="120" cy="160" r="4" fill="#F2EDE0" opacity=".7"/>
+          <circle cx="240" cy="240" r="3" fill="#C8704B"/>
+          <circle cx="180" cy="320" r="5" fill="#F2EDE0" opacity=".5"/>
+          <circle cx="310" cy="380" r="3" fill="#C8704B"/>
+          <circle cx="80" cy="380" r="4" fill="#F2EDE0" opacity=".6"/>
+        </g>
+      </svg>
+      <div class="ed-figure-caption">Figure 01 — A typical month of agency spend, before and after a clean line of sight.</div>
+    </div>
+    <div class="ed-body reveal d1">
+      <div class="section-eyebrow">A small but specific brief</div>
+      <h2 class="serif">We make the part of payroll <em>nobody owns</em> — owned.</h2>
+      <p>The temporary workforce is rarely anyone's full-time job. Procurement sees the contract. HR sees the headcount. Finance sees the invoice. <strong>Nobody, usually, sees the whole picture.</strong></p>
+      <p>Nutral sits in that gap. We're not a recruiter, not a payroll provider, and not a software vendor. We're a small specialist team that brings procurement-grade rigour to a category that's quietly grown into one of the largest lines on your P&amp;L.</p>
+      <p style="margin-top:32px;">
+        <a href="#contact" class="btn"><span>Discuss your supply chain <span class="arrow">→</span></span></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="quotes">
+  <div class="container">
+    <div class="quotes-head reveal">
+      <div class="section-eyebrow">In their words</div>
+      <h2 class="section-h2">Clients on what <em>actually</em> changed.</h2>
+    </div>
+    <div class="quotes-grid">
+      <div class="quote-card reveal">
+        <div class="mark">"</div>
+        <blockquote>Nutral did in eight weeks what an internal project couldn't in two years — and we kept every supplier we wanted to keep.</blockquote>
+        <div class="quote-meta">
+          <div class="quote-avatar"></div>
+          <div>
+            <div class="quote-name">Head of Procurement</div>
+            <div class="quote-role">FTSE-listed logistics group</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal d1">
+        <div class="mark">"</div>
+        <blockquote>For the first time, our agency spend reads like a properly procured category — not a line item we apologise for at audit.</blockquote>
+        <div class="quote-meta">
+          <div class="quote-avatar" style="background:linear-gradient(135deg, var(--sage), var(--clay));"></div>
+          <div>
+            <div class="quote-name">CFO</div>
+            <div class="quote-role">National care provider</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal d2">
+        <div class="mark">"</div>
+        <blockquote>The diagnostic alone was worth the engagement. We saw things in our own invoices that we'd been signing off for years.</blockquote>
+        <div class="quote-meta">
+          <div class="quote-avatar" style="background:linear-gradient(135deg, var(--ink), var(--sage));"></div>
+          <div>
+            <div class="quote-name">Director of People Operations</div>
+            <div class="quote-role">Regional NHS trust</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="cta-bg">
+    <svg viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid slice">
+      <g stroke="rgba(242,237,224,.06)" fill="none" stroke-width="1">
+        <circle cx="700" cy="300" r="120"/>
+        <circle cx="700" cy="300" r="220"/>
+        <circle cx="700" cy="300" r="340"/>
+        <circle cx="700" cy="300" r="470"/>
+        <circle cx="700" cy="300" r="610"/>
+      </g>
+      <g class="cta-dots">
+        <circle cx="820" cy="300" r="3" fill="#C8704B" class="node-pulse"/>
+        <circle cx="700" cy="80" r="3" fill="#E08B62"/>
+        <circle cx="360" cy="300" r="3" fill="#E08B62"/>
+        <circle cx="1040" cy="300" r="3" fill="#E08B62"/>
+        <circle cx="700" cy="520" r="3" fill="#E08B62"/>
+      </g>
+    </svg>
+  </div>
+  <div class="container">
+    <h2 class="reveal serif">A short conversation,<br/><em>a much clearer picture.</em></h2>
+    <p class="reveal d1">Send us a note and we'll come back with two or three observations on your contingent workforce — no pitch, no obligation, no software demo.</p>
+    <div class="reveal d2">
+      <a href="mailto:hello@nutral.uk" class="btn"><span>hello@nutral.uk <span class="arrow">→</span></span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div class="foot-tagline">Visibility, control and value <em>for the workforce you don't employ.</em></div>
+      <a href="#contact" class="btn btn-ghost"><span>Speak to us <span class="arrow">→</span></span></a>
+    </div>
+    <div class="foot-cols">
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#">Procurement diagnostic</a></li>
+          <li><a href="#">Agency renegotiation</a></li>
+          <li><a href="#">Payroll intermediary audit</a></li>
+          <li><a href="#">Governance & reporting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Insights</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>hello@nutral.uk</li>
+          <li>United Kingdom</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Compliance</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Modern slavery</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© Nutral Ltd. All rights reserved.</div>
+      <div>Mockup · Variant 2</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const parallaxEls = document.querySelectorAll('[data-parallax]');
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax);
+      const rect = el.getBoundingClientRect();
+      const y = (rect.top - window.innerHeight / 2) * speed;
+      el.style.transform = `translate3d(0, ${y}px, 0)`;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Timeline draw + row markers
+  const timeline = document.getElementById('timeline');
+  if (timeline) {
+    const drawIo = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { timeline.classList.add('drawn'); drawIo.unobserve(timeline); } });
+    }, { threshold: 0.15 });
+    drawIo.observe(timeline);
+
+    const rowIo = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rowIo.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.t-row').forEach(r => rowIo.observe(r));
+  }
+
+  // Count-up
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const animateCount = (el) => {
+    const target = parseFloat(el.dataset.count);
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const suffix = el.dataset.suffix || '';
+    const dur = 1800;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      const v = target * ease(t);
+      el.textContent = v.toFixed(decimals) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = target.toFixed(decimals) + suffix;
+    };
+    requestAnimationFrame(step);
+  };
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cio.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+  // Hero word stagger (CSS-only fallback already in .reveal; this adds per-word entry)
+  document.querySelectorAll('.hero-h1 .word').forEach((w, i) => {
+    w.style.opacity = '0';
+    w.style.transform = 'translateY(20px)';
+    w.style.display = 'inline-block';
+    w.style.transition = `opacity .9s ${i * 0.08}s cubic-bezier(.2,.8,.2,1), transform .9s ${i * 0.08}s cubic-bezier(.2,.8,.2,1)`;
+    requestAnimationFrame(() => {
+      setTimeout(() => { w.style.opacity = '1'; w.style.transform = 'none'; }, 200);
+    });
+  });
+</script>
+</body>
+</html>

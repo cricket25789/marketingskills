@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Nutral — Procurement clarity for your temporary workforce</title>
+<meta name="description" content="Nutral optimises your relationships with recruitment agencies and payroll intermediaries — bringing visibility, control, and value to your contingent workforce." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..700,30..100&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #F4EEE2;
+    --bone-2: #ECE3D2;
+    --cream: #FAF6EE;
+    --moss: #2A3A2C;
+    --moss-2: #3D5240;
+    --clay: #B86A3E;
+    --clay-2: #D08153;
+    --ink: #1A1A17;
+    --muted: #6F6A60;
+    --line: rgba(26,26,23,.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .1  0 0 0 0 .08  0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.5'/></svg>");
+    opacity: .35;
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+  .serif { font-family: 'Fraunces', 'Times New Roman', serif; font-variation-settings: "opsz" 144, "SOFT" 50; letter-spacing: -.02em; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+  /* Nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 22px 0;
+    backdrop-filter: blur(12px);
+    background: rgba(250,246,238,.7);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, padding .3s;
+  }
+  .nav.scrolled { border-bottom-color: var(--line); padding: 14px 0; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 26px; height: 26px; }
+  .nav-links { display: flex; gap: 36px; font-size: 14px; color: var(--moss); }
+  .nav-links a { transition: color .2s; }
+  .nav-links a:hover { color: var(--clay); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    background: var(--moss); color: var(--cream);
+    border: 1px solid var(--moss);
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), background .3s, color .3s, box-shadow .3s;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 12px 28px -12px rgba(26,26,23,.4); }
+  .btn-ghost { background: transparent; color: var(--moss); border-color: var(--moss); }
+  .btn-ghost:hover { background: var(--moss); color: var(--cream); }
+  .btn .arrow { transition: transform .3s; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  @media (max-width: 800px) { .nav-links { display: none; } }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 180px 0 120px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 80px;
+    align-items: center;
+  }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 60px; } .hero { padding: 140px 0 80px; } }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--moss); margin-bottom: 28px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--moss); }
+  h1.hero-h1 {
+    font-size: clamp(46px, 7vw, 92px);
+    line-height: 0.98;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+  h1.hero-h1 em { font-style: italic; color: var(--moss); font-variation-settings: "opsz" 144, "SOFT" 100; }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bone);
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: .55;
+    animation: float 14s ease-in-out infinite;
+  }
+  .blob.a { width: 60%; height: 60%; background: var(--clay); top: -10%; left: -10%; }
+  .blob.b { width: 70%; height: 70%; background: var(--moss); bottom: -20%; right: -15%; animation-delay: -7s; }
+  .blob.c { width: 40%; height: 40%; background: var(--clay-2); top: 30%; left: 30%; animation-delay: -3s; opacity: .35; }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px,-20px) scale(1.08); }
+    66% { transform: translate(-25px,15px) scale(.95); }
+  }
+  .hero-card {
+    position: absolute;
+    bottom: 28px; left: 28px; right: 28px;
+    padding: 22px 24px;
+    background: rgba(250,246,238,.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 4px;
+    display: flex; gap: 18px; align-items: center;
+  }
+  .hero-card-num { font-family: 'Fraunces', serif; font-size: 44px; font-weight: 300; color: var(--moss); line-height: 1; }
+  .hero-card-text { font-size: 13px; color: var(--muted); }
+  .hero-card-text strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 2px; font-family: 'Fraunces', serif; font-size: 15px; }
+
+  /* Floating SVG accent */
+  .hero-svg {
+    position: absolute;
+    top: 30%; right: -40px;
+    width: 180px; height: 180px;
+    opacity: .9;
+    animation: spin 30s linear infinite;
+  }
+  @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+  /* Marquee */
+  .marquee-section { padding: 60px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bone); }
+  .marquee-label { text-align: center; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+  .marquee { display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .marquee-track {
+    display: flex; gap: 80px; animation: scroll 32s linear infinite;
+    padding-right: 80px;
+    flex-shrink: 0;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-item { font-family: 'Fraunces', serif; font-size: 28px; color: var(--moss); white-space: nowrap; font-weight: 300; letter-spacing: -.01em; opacity: .8; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* Section */
+  section.block { padding: 140px 0; position: relative; }
+  @media (max-width: 800px) { section.block { padding: 90px 0; } }
+  .section-head {
+    max-width: 760px; margin-bottom: 80px;
+  }
+  .section-eyebrow {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--clay); margin-bottom: 18px;
+  }
+  h2.section-h2 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -.02em;
+  }
+  h2.section-h2 em { font-style: italic; color: var(--moss); }
+
+  /* Pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+  @media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
+  .pillar {
+    padding: 60px 40px 60px 0;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background .4s;
+  }
+  .pillar:last-child { border-right: none; }
+  @media (max-width: 900px) { .pillar { border-right: none; padding-right: 0; } }
+  .pillar:hover { background: var(--bone); }
+  .pillar-num {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: var(--clay); margin-bottom: 24px;
+  }
+  .pillar-icon { width: 56px; height: 56px; margin-bottom: 24px; color: var(--moss); }
+  .pillar h3 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 400; margin-bottom: 14px; letter-spacing: -.01em; }
+  .pillar p { color: var(--muted); font-size: 15px; }
+
+  /* Process / parallax */
+  .process { background: var(--moss); color: var(--bone); position: relative; overflow: hidden; }
+  .process .section-h2 { color: var(--bone); }
+  .process .section-h2 em { color: var(--clay-2); }
+  .process .section-eyebrow { color: var(--clay-2); }
+  .process-bg {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .process-circle {
+    position: absolute;
+    border: 1px solid rgba(244,238,226,.08);
+    border-radius: 50%;
+  }
+  .process-circle.a { width: 800px; height: 800px; top: -300px; right: -200px; }
+  .process-circle.b { width: 500px; height: 500px; top: 50px; right: -100px; }
+  .process-circle.c { width: 1200px; height: 1200px; bottom: -700px; left: -300px; }
+
+  .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 60px 80px; position: relative; }
+  @media (max-width: 800px) { .steps { grid-template-columns: 1fr; gap: 50px; } }
+  .step { display: flex; gap: 24px; }
+  .step-num {
+    font-family: 'Fraunces', serif; font-size: 56px; font-weight: 300; color: var(--clay-2);
+    line-height: 1; min-width: 80px;
+  }
+  .step h4 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 400; margin-bottom: 10px; }
+  .step p { color: rgba(244,238,226,.65); font-size: 15px; }
+
+  /* Stats */
+  .stats { background: var(--bone); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; border-top: 1px solid var(--line); padding-top: 60px; }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-num {
+    font-family: 'Fraunces', serif; font-size: clamp(56px, 7vw, 96px); font-weight: 300; color: var(--moss); line-height: 1; margin-bottom: 12px;
+    letter-spacing: -.03em;
+  }
+  .stat-num .unit { font-size: .5em; color: var(--clay); margin-left: 4px; vertical-align: top; }
+  .stat-label { font-size: 14px; color: var(--muted); max-width: 200px; }
+
+  /* Testimonial */
+  .testimonial-wrap { position: relative; }
+  .testimonial-quote {
+    position: absolute; top: -40px; left: -20px;
+    font-family: 'Fraunces', serif; font-size: 200px; line-height: 1; color: var(--clay); opacity: .25;
+  }
+  blockquote.t-quote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 3.6vw, 44px);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--ink);
+    max-width: 920px;
+    margin-bottom: 40px;
+    letter-spacing: -.01em;
+    position: relative;
+  }
+  blockquote.t-quote em { color: var(--moss); }
+  .t-author { display: flex; align-items: center; gap: 18px; }
+  .t-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--clay), var(--moss)); }
+  .t-name { font-weight: 500; }
+  .t-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* CTA */
+  .cta { background: var(--bone-2); position: relative; overflow: hidden; }
+  .cta-inner {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: center;
+  }
+  @media (max-width: 800px) { .cta-inner { grid-template-columns: 1fr; gap: 40px; } }
+  .cta h2 { font-family: 'Fraunces', serif; font-size: clamp(40px,5vw,72px); font-weight: 300; line-height: 1.02; letter-spacing: -.02em; }
+  .cta h2 em { color: var(--clay); }
+  .cta-form { display: flex; gap: 0; background: var(--cream); border-radius: 999px; padding: 6px; border: 1px solid var(--line); }
+  .cta-form input { flex: 1; border: none; background: transparent; padding: 14px 22px; font-family: inherit; font-size: 14px; outline: none; color: var(--ink); }
+  .cta-form .btn { white-space: nowrap; }
+
+  /* Footer */
+  footer { background: var(--ink); color: var(--bone); padding: 80px 0 40px; position: relative; z-index: 2; }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  @media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+  .foot-grid h5 { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 400; color: var(--clay-2); margin-bottom: 20px; letter-spacing: .04em; text-transform: uppercase; }
+  .foot-grid ul { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 14px; color: rgba(244,238,226,.7); }
+  .foot-grid ul a:hover { color: var(--clay-2); }
+  .foot-blurb { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 300; line-height: 1.25; color: var(--bone); max-width: 320px; }
+  .foot-bottom { display: flex; justify-content: space-between; padding-top: 30px; border-top: 1px solid rgba(244,238,226,.15); font-size: 12px; color: rgba(244,238,226,.5); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .08s; }
+  .reveal.d2 { transition-delay: .16s; }
+  .reveal.d3 { transition-delay: .24s; }
+  .reveal.d4 { transition-delay: .32s; }
+
+  /* Parallax */
+  [data-parallax] { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="#">
+      <svg class="logo-mark" viewBox="0 0 26 26" fill="none">
+        <circle cx="13" cy="13" r="12" stroke="#2A3A2C" stroke-width="1.4"/>
+        <path d="M6 18 L13 6 L20 18" stroke="#2A3A2C" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <circle cx="13" cy="13" r="2.4" fill="#B86A3E"/>
+      </svg>
+      nutral
+    </a>
+    <div class="nav-links">
+      <a href="#approach">Approach</a>
+      <a href="#process">How it works</a>
+      <a href="#results">Results</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn">Speak to us <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow reveal">Temporary workforce, optimised</div>
+      <h1 class="serif hero-h1 reveal d1">A clearer view of every<br/><em>agency, hour</em> and pound spent.</h1>
+      <p class="hero-sub reveal d2">Nutral enhances the effectiveness of your temporary workforce procurement — optimising relationships with recruitment agencies and payroll intermediaries to give your organisation visibility, control, and value.</p>
+      <div class="hero-ctas reveal d3">
+        <a href="#contact" class="btn">Book a diagnostic <span class="arrow">→</span></a>
+        <a href="#approach" class="btn btn-ghost">See our approach</a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal d2" data-parallax="0.08">
+      <div class="blob a"></div>
+      <div class="blob b"></div>
+      <div class="blob c"></div>
+
+      <svg class="hero-svg" viewBox="0 0 200 200" fill="none">
+        <defs>
+          <path id="circle-text" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+        </defs>
+        <text font-family="Fraunces, serif" font-size="11" letter-spacing="3" fill="#F4EEE2">
+          <textPath href="#circle-text">VISIBILITY · CONTROL · VALUE · VISIBILITY · CONTROL · VALUE · </textPath>
+        </text>
+        <circle cx="100" cy="100" r="2.5" fill="#B86A3E"/>
+      </svg>
+
+      <div class="hero-card">
+        <div class="hero-card-num" data-count="38" data-suffix="%">0%</div>
+        <div class="hero-card-text">
+          <strong>Average margin recovered</strong>
+          On agency spend within the first 12 weeks
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="container">
+    <div class="marquee-label reveal">Working with procurement, HR and finance teams across</div>
+  </div>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">— Healthcare</span>
+      <span class="marquee-item">— Logistics</span>
+      <span class="marquee-item">— Manufacturing</span>
+      <span class="marquee-item">— Local Government</span>
+      <span class="marquee-item">— Hospitality</span>
+      <span class="marquee-item">— Construction</span>
+      <span class="marquee-item">— Retail</span>
+      <span class="marquee-item">— Education</span>
+      <span class="marquee-item">— Healthcare</span>
+      <span class="marquee-item">— Logistics</span>
+      <span class="marquee-item">— Manufacturing</span>
+      <span class="marquee-item">— Local Government</span>
+      <span class="marquee-item">— Hospitality</span>
+      <span class="marquee-item">— Construction</span>
+      <span class="marquee-item">— Retail</span>
+      <span class="marquee-item">— Education</span>
+    </div>
+  </div>
+</div>
+
+<section class="block" id="approach">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Our approach</div>
+      <h2 class="serif section-h2">Procurement-grade clarity for a market that's <em>built to obscure it.</em></h2>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal d1">
+        <div class="pillar-num">— 01</div>
+        <svg class="pillar-icon" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="28" cy="28" r="3" fill="currentColor"/>
+          <path d="M28 6 V14 M28 42 V50 M6 28 H14 M42 28 H50" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <h3>Visibility</h3>
+        <p>A single, defensible view of every agency, role, margin and on-cost across your supply chain — no more dashboards stitched from invoices.</p>
+      </div>
+      <div class="pillar reveal d2">
+        <div class="pillar-num">— 02</div>
+        <svg class="pillar-icon" viewBox="0 0 56 56" fill="none">
+          <rect x="8" y="14" width="40" height="28" rx="2" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M8 22 H48" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="14" cy="18" r="1.2" fill="currentColor"/>
+          <circle cx="18" cy="18" r="1.2" fill="currentColor"/>
+          <path d="M16 30 H40 M16 35 H32" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <h3>Control</h3>
+        <p>Clean contracts, agreed rate cards and a governance layer that lets you challenge the market with confidence rather than guess at it.</p>
+      </div>
+      <div class="pillar reveal d3">
+        <div class="pillar-num">— 03</div>
+        <svg class="pillar-icon" viewBox="0 0 56 56" fill="none">
+          <path d="M10 44 L22 30 L32 38 L46 18" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <path d="M40 18 H46 V24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="22" cy="30" r="2" fill="currentColor"/>
+          <circle cx="32" cy="38" r="2" fill="currentColor"/>
+        </svg>
+        <h3>Value</h3>
+        <p>Lower cost-to-fill, healthier supplier relationships, and a recoverable margin you can prove on a board paper — every quarter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block process" id="process">
+  <div class="process-bg">
+    <div class="process-circle a" data-parallax="-0.12"></div>
+    <div class="process-circle b" data-parallax="0.06"></div>
+    <div class="process-circle c" data-parallax="-0.08"></div>
+  </div>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">How it works</div>
+      <h2 class="serif section-h2">A measured engagement, <em>not a software roll-out.</em></h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal d1">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Diagnose</h4>
+          <p>We map your current supply chain, contracts, payroll intermediaries and pay-to-charge margins. You see the picture, often for the first time.</p>
+        </div>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Design</h4>
+          <p>We work alongside procurement, HR and finance to design a model that's commercially fair, legally compliant and operationally lighter.</p>
+        </div>
+      </div>
+      <div class="step reveal d3">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Negotiate</h4>
+          <p>We open the conversations agencies don't initiate — rate cards, on-costs, rebates, payroll fees — using benchmarks from comparable organisations.</p>
+        </div>
+      </div>
+      <div class="step reveal d4">
+        <div class="step-num">04</div>
+        <div>
+          <h4>Sustain</h4>
+          <p>We hand over reporting, governance and renewal cadences so the savings hold long after we step back. No lock-in, no licence fee.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block stats" id="results">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Results, in numbers</div>
+      <h2 class="serif section-h2">The same workforce. <em>Materially better economics.</em></h2>
+    </div>
+
+    <div class="stats-grid">
+      <div class="reveal d1">
+        <div class="stat-num"><span data-count="14" data-suffix="">0</span><span class="unit">%</span></div>
+        <div class="stat-label">Average reduction in total agency cost in year one.</div>
+      </div>
+      <div class="reveal d2">
+        <div class="stat-num">£<span data-count="2.4" data-suffix="" data-decimals="1">0</span><span class="unit">m</span></div>
+        <div class="stat-label">Recoverable margin identified for a typical mid-market client.</div>
+      </div>
+      <div class="reveal d3">
+        <div class="stat-num"><span data-count="93" data-suffix="">0</span><span class="unit">%</span></div>
+        <div class="stat-label">Of incumbent suppliers retained after rate renegotiation.</div>
+      </div>
+      <div class="reveal d4">
+        <div class="stat-num"><span data-count="12" data-suffix="">0</span><span class="unit">wks</span></div>
+        <div class="stat-label">From diagnostic to first measurable saving on invoice.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container testimonial-wrap reveal">
+    <div class="testimonial-quote serif">"</div>
+    <blockquote class="t-quote serif">Nutral did in eight weeks what an internal project couldn't in two years — gave us a clean line of sight into agency spend, and the confidence to <em>renegotiate without losing a single supplier we wanted to keep.</em></blockquote>
+    <div class="t-author">
+      <div class="t-avatar"></div>
+      <div>
+        <div class="t-name">Head of Procurement</div>
+        <div class="t-role">FTSE-listed logistics group · UK</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block cta" id="contact">
+  <div class="container cta-inner">
+    <div class="reveal">
+      <h2 class="serif">A short conversation, <em>a clearer picture.</em></h2>
+      <p style="margin-top:24px; color:var(--muted); max-width:520px;">Tell us a little about your contingent workforce and we'll come back with two or three observations worth a follow-up call — no pitch, no obligation.</p>
+    </div>
+    <form class="cta-form reveal d1" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').innerHTML='Thank you ✓';">
+      <input type="email" placeholder="Work email" required />
+      <button type="submit" class="btn">Request a call <span class="arrow">→</span></button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="color:var(--bone); margin-bottom:20px;">
+          <svg class="logo-mark" viewBox="0 0 26 26" fill="none">
+            <circle cx="13" cy="13" r="12" stroke="#F4EEE2" stroke-width="1.4"/>
+            <path d="M6 18 L13 6 L20 18" stroke="#F4EEE2" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+            <circle cx="13" cy="13" r="2.4" fill="#D08153"/>
+          </svg>
+          nutral
+        </div>
+        <p class="foot-blurb">Visibility, control and value for the workforce you don't employ.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#">Procurement diagnostic</a></li>
+          <li><a href="#">Agency renegotiation</a></li>
+          <li><a href="#">Payroll intermediary audit</a></li>
+          <li><a href="#">Governance & reporting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Insights</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Get in touch</h5>
+        <ul>
+          <li>hello@nutral.uk</li>
+          <li>United Kingdom</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© Nutral Ltd. All rights reserved.</div>
+      <div>Mockup · Variant 1</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+      const speed = parseFloat(el.dataset.parallax);
+      const rect = el.getBoundingClientRect();
+      const y = (rect.top - window.innerHeight / 2) * speed;
+      el.style.transform = `translate3d(0, ${y}px, 0)`;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Count-up
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const animateCount = (el) => {
+    const target = parseFloat(el.dataset.count);
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const suffix = el.dataset.suffix || '';
+    const dur = 1600;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      const v = target * ease(t);
+      el.textContent = v.toFixed(decimals) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = target.toFixed(decimals) + suffix;
+    };
+    requestAnimationFrame(step);
+  };
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cio.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+</script>
+</body>
+</html>
