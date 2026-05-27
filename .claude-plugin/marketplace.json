@@ -18,11 +18,15 @@
       "skills": [
         "./skills/ab-test-setup",
         "./skills/analytics-tracking",
+        "./skills/banner-design",
+        "./skills/brand",
         "./skills/cold-email",
         "./skills/competitor-alternatives",
         "./skills/content-strategy",
         "./skills/copy-editing",
         "./skills/copywriting",
+        "./skills/design",
+        "./skills/design-system",
         "./skills/email-sequence",
         "./skills/form-cro",
         "./skills/free-tool-strategy",
@@ -41,7 +45,10 @@
         "./skills/schema-markup",
         "./skills/seo-audit",
         "./skills/signup-flow-cro",
-        "./skills/social-content"
+        "./skills/slides",
+        "./skills/social-content",
+        "./skills/ui-styling",
+        "./skills/ui-ux-pro-max"
       ]
     }
   ]
