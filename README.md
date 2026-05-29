@@ -18,7 +18,10 @@ Skills are markdown files that give AI agents specialized knowledge and workflow
 | Skill | Description |
 |-------|-------------|
 | [ab-test-setup](skills/ab-test-setup/) | When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions "A/B... |
+| [account-based-marketing](skills/account-based-marketing/) | When the user wants to plan or run account-based marketing (ABM) to win named B2B accounts. Also use when the user... |
+| [accreditation-marketing](skills/accreditation-marketing/) | When the user wants to market an accreditation, certification, audit, or standards scheme to the suppliers/companies... |
 | [analytics-tracking](skills/analytics-tracking/) | When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions... |
+| [case-study](skills/case-study/) | When the user wants to create a customer case study, customer story, success story, or proof-led reference content.... |
 | [cold-email](skills/cold-email/) | Write B2B cold emails and follow-up sequences that get replies. Use when the user wants to write cold outreach emails,... |
 | [competitor-alternatives](skills/competitor-alternatives/) | When the user wants to create competitor comparison or alternative pages for SEO and sales enablement. Also use when... |
 | [content-strategy](skills/content-strategy/) | When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also... |
