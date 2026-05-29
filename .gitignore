@@ -17,6 +17,10 @@ node_modules/
 # Remotion video project
 video/
 
+# Python
+__pycache__/
+*.pyc
+
 # Editor
 *.swp
 *.swo
